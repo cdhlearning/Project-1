@@ -48,5 +48,15 @@ pipeline {
             }
             
         }
+
+        stage('iqaulity gate status check'){
+            when { expression { params.action == 'create'}}
+            steps{
+                script{
+                    def SonarQubecredentialId = 'sonar'
+                    qualityGate(SonarQubecredentialId)
+                }   
+            }
+        }
     }
 }
