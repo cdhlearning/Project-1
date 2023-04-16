@@ -1,3 +1,5 @@
+@library('my-shared-library') _
+
 pipeline {
 
     agent any
@@ -7,7 +9,10 @@ pipeline {
         stage('Git checkout'){
             steps{
                 script{
-                    git branch: 'main', url: 'https://github.com/cdhlearning/Project-1.git'
+                    gitCheckout{
+                        branch: "main",
+                        url: "https://github.com/cdhlearning/Project-1.git"
+                    }
                 }
             }
         }
