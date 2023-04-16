@@ -38,25 +38,43 @@ pipeline {
                 }   
             }
         }
-        stage('static code analysis Sonarqube'){
-            when { expression { params.action == 'create'}}
-            steps{
-                script{
-                    def SonarQubecredentialId = 'sonarcloud'
-                    staticodeanalysis(SonarQubecredentialId)
-                }
-            }
+        // stage('static code analysis Sonarqube'){
+        //     when { expression { params.action == 'create'}}
+        //     steps{
+        //         script{
+        //             def SonarQubecredentialId = 'sonarcloud'
+        //             staticodeanalysis(SonarQubecredentialId)
+        //         }
+        //     }
             
-        }
+        // }
 
-        stage('iqaulity gate status check'){
-            when { expression { params.action == 'create'}}
-            steps{
-                script{
-                    def SonarQubecredentialId = 'sonarcloud'
-                    qualityGate(SonarQubecredentialId)
-                }   
+        stages {
+          stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('sonarcloud') {
+                sh 'mvn clean package sonar:sonar'
+              }
             }
-        }
+          }
+
+        // stage('iqaulity gate status check'){
+        //     when { expression { params.action == 'create'}}
+        //     steps{
+        //         script{
+        //             def SonarQubecredentialId = 'sonarcloud'
+        //             qualityGate(SonarQubecredentialId)
+        //         }   
+        //     }
+        // }
+
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
     }
 }
