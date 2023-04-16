@@ -1,4 +1,4 @@
-//@library('my-shared-library') _
+@library('my-shared-library') _
 
 pipeline {
 
@@ -8,9 +8,11 @@ pipeline {
 
         stage('Git checkout'){
             steps{
-                gitCheckout{
+                script{
+                    gitCheckout(
                     branch: "main",
                     url: "https://github.com/cdhlearning/Project-1.git"
+                    )
                 }   
             }
         }
