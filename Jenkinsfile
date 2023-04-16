@@ -9,7 +9,7 @@ pipeline {
         stage('Git checkout'){
             steps{
                 script{
-                    gitCheckout{
+                    GitCheckout{
                         branch: "main",
                         url: "https://github.com/cdhlearning/Project-1.git"
                     }
