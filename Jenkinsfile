@@ -23,7 +23,7 @@ pipeline {
                 }   
             }
         }
-        stage('unit test maven'){
+        stage('integration test maven'){
             steps{
                 script{
                   mvnintegrationtest()
