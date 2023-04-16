@@ -49,16 +49,16 @@ pipeline {
             
         // }
 
-        stages {
-          stage("build & SonarQube analysis") {
+ 
+        stage("build & SonarQube analysis") {
             agent any
             steps {
               withSonarQubeEnv('sonarcloud') {
                 sh 'mvn clean package sonar:sonar'
               }
             }
-          }
         }
+        
         // stage('iqaulity gate status check'){
         //     when { expression { params.action == 'create'}}
         //     steps{
