@@ -42,8 +42,8 @@ pipeline {
             when { expression { params.action == 'create'}}
             steps{
                 script{
-                    def sonarcred = 'sonar'
-                    staticodeanalysis(sonarcred)
+                    def SonarQubecredentialId = 'sonar'
+                    staticodeanalysis(SonarQubecredentialId)
                 }
             }
             
